@@ -2,6 +2,13 @@ package ohtu;
 
 public class TennisGame {
 
+    // SCORING RULES
+    private static final int GAME_POINT = 4;
+    private static final int ADVANTAGE_PLAYER1 = 1;
+    private static final int ADVANTAGE_PLAYER2 = -1;
+    private static final int WIN_PLAYER1 = 2;
+    private static final int WIN_PLAYER2 = -2;
+
     private int player1Points = 0;
     private int player2Points = 0;
     private String player1Name;
@@ -27,7 +34,7 @@ public class TennisGame {
         }
 
         if (gameIsEven()) {
-            return pointsToScore(player1Points) + "-All";
+            return pointsToCall(player1Points) + "-All";
         }
 
         if (player1HasAdvantage()) {
@@ -46,12 +53,12 @@ public class TennisGame {
             return "Win for player2";
         }
 
-        // game is not even and each playr has less than 4 points
-        return pointsToScore(player1Points) + "-" + pointsToScore(player2Points);
+        // game is not even and each player has less than 4 points
+        return pointsToCall(player1Points) + "-" + pointsToCall(player2Points);
     }
 
     private boolean gameIsDeuce() {
-        return player1Points >= 4 && gameIsEven();
+        return player1Points >= GAME_POINT && gameIsEven();
     }
 
     private boolean gameIsEven() {
@@ -59,26 +66,26 @@ public class TennisGame {
     }
 
     private boolean player1HasAdvantage() {
-        return player1Points >= 4 && pointDifference() == 1;
+        return player1Points >= GAME_POINT && pointDifference() == ADVANTAGE_PLAYER1;
     }
 
     private boolean player2HasAdvantage() {
-        return player2Points >= 4 && pointDifference() == -1;
+        return player2Points >= GAME_POINT && pointDifference() == ADVANTAGE_PLAYER2;
     }
 
     private boolean player1HasWon() {
-        return player1Points >= 4 && pointDifference() >= 2;
+        return player1Points >= GAME_POINT && pointDifference() >= WIN_PLAYER1;
     }
 
     private boolean player2HasWon() {
-        return player2Points >= 4 && pointDifference() <= -2;
+        return player2Points >= GAME_POINT && pointDifference() <= WIN_PLAYER2;
     }
 
     private int pointDifference() {
         return player1Points - player2Points;
     }
 
-    private String pointsToScore(int points) {
+    private String pointsToCall(int points) {
 
         switch (points) {
             case 0:
